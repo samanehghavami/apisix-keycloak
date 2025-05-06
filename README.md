@@ -13,7 +13,7 @@ curl -i "http://172.27.220.43:9180/apisix/admin/routes" -X PUT -H 'X-API-KEY: ed
             "client_id":"client in keycloak",
             "client_secret":"client secret in keycloak",
             "discovery":"http://172.27.220.43:8080/auth/realms/apisix_realm/.well-known/openid-configuration",
-"token_endpoint": "http://172.27.220.43:8080/auth/realms/apisix_realm/protocol/openid-connect/token",
+            "token_endpoint": "http://172.27.220.43:8080/auth/realms/apisix_realm/protocol/openid-connect/token",
             "scope":"openid profile",
             "bearer_only":true,
             "realm":"apisix_realm",
