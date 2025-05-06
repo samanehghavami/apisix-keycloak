@@ -1,0 +1,10 @@
+deployment:
+  role: traditional
+  admin:
+    admin_key_required: true
+    allow_admin:
+      - 127.0.0.1
+    admin_key:
+      - name: "admin"
+        key: "MyStrongSecretKey"
+        role: admin
