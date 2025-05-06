@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  apisix:
+    image: apache/apisix
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ./apisix_conf/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
+
+    networks:
+      apisix:
+
+    restart: unless-stopped
+
+
+  kc-db:
+    image: postgres
+    volumes:
+        - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+ keycloak:
+    image: 188.0.241.123:9632/sso
+    ports:
+      - "8081:8080"
+      - "8443:8443"
+    restart: unless-stopped
+    volumes:
+      - keycloak-data-volume:/var/lib/keycloak/data
+    environment:
+      JAVA_OPTS_APPEND: '-Djgroups.dns.query=keycloak -Dkeycloak.profile.feature.docker=enabled'
+      KC_DB_URL: 'jdbc:postgresql://root-kc-db-1:5432/keycloak'
+      KC_DB: keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KC_LOG_LEVEL: debug
+      KC_PROXY: edge
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KC_HTTP_RELATIVE_PATH: "/auth"
+      KC_HTTP_ENABLED: 'true'
+      KC_HOSTNAME_STRICT: 'false'
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    depends_on:
+      - "kc-db"
+
+networks:
+  apisix:
+    driver: bridge
+volumes:
+   keycloak-data-volume:
