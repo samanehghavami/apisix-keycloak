@@ -22,12 +22,13 @@ curl -i "http://172.27.220.43:9180/apisix/admin/routes" -X PUT -H 'X-API-KEY: ed
         }
     },
     "upstream":{
+    
         "type":"roundrobin",
         
         "nodes": [ 
         
-      {"host": "flask ip master", "port": 5000, "weight": 1, "priority": 1},
-      {"host": "flask ip additional", "port": 5000, "weight": 1, "priority": 0}
+          {"host": "flask ip master", "port": 5000, "weight": 1, "priority": 1},
+          {"host": "flask ip additional", "port": 5000, "weight": 1, "priority": 0}
 	  ]
 	  
             }
