@@ -1,5 +1,9 @@
 # apisix-keycloak
 if you are using AdminApi you don't need apisix.yml and you can route and create cunsomer with curl or postman
+
+
+
+
 curl -i "http://172.27.220.43:9180/apisix/admin/routes" -X PUT -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -d '
 {
     "id": "endpoint",
